@@ -5,18 +5,17 @@ import com.fasterxml.jackson.databind.JsonNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
-@RestController
+@Controller
 public class LoginController {
 	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 	@Autowired
 	private ILoginService loginService;
-
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public void login(@RequestBody JsonNode payload) {
@@ -24,10 +23,13 @@ public class LoginController {
 	}
 
 	@RequestMapping("/hello")
-	public String index(Model model) {
-		model.addAttribute("name", "Sumit");
-		return "home";
+	public ModelAndView home(ModelAndView mnv) throws Exception {
+		mnv.setViewName("home");
+		mnv.addObject("name", "Sumit");
+		return mnv;
+
 	}
+
 
 }
 
